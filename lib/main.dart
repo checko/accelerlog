@@ -109,8 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _accelerometerValues = <double>[event.x, event.y, event.z];
           String times = "${now.hour}:${now.minute}:${now.second}";
-          String gdata = "${event.x.toStringAsFixed(3)},${event.y.toStringAsFixed(3)},${event.z.toStringAsFixed(3)}";
-          Lager.lograw("$times $gdata\n");
+          String gdata = "${event.x.toStringAsFixed(2)},${event.y.toStringAsFixed(2)},${event.z.toStringAsFixed(2)}";
+          Lager.lograw("$gdata\n");
         });
       }
     }));
