@@ -23,6 +23,12 @@ class Lager {
     });
   }
 
+  static Future lograw(String s) async {
+    return _lock.synchronized(() async {
+      await _logFile.writeAsString(s, mode: FileMode.append, flush: true);
+    });
+  }
+
   static File _createLogFile(canonicalLogFileName) => File(canonicalLogFileName);
 
 }
