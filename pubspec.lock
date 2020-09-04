@@ -154,9 +154,9 @@ packages:
   sensors:
     dependency: "direct main"
     description:
-      name: sensors
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "sensors-0.4.2+4m"
+      relative: true
+    source: path
     version: "0.4.2+4"
   sky_engine:
     dependency: transitive

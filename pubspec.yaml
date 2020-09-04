@@ -26,6 +26,7 @@ dependencies:
   synchronized: ^2.2.0+2
   path_provider: ^1.6.14
   sensors:
+    path: sensors-0.4.2+4m
 
 
   # The following adds the Cupertino Icons font to your application.
