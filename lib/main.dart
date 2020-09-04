@@ -7,8 +7,24 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+import 'package:gsensorlog/file_logger.dart';
+
+Future<String> _getDocsDir() async {
+  final directory = await getExternalStorageDirectory();
+  return directory.path;
+}
+
+var _logFilename = "gvalue.txt";
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  var docsDir = await _getDocsDir();
+  String canonFilename = '$docsDir/$_logFilename';
+
+  await Lager.initializeLogging(canonFilename);
+
   runApp(MyApp());
 }
 
@@ -35,10 +51,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const int _snakeRows = 20;
-  static const int _snakeColumns = 20;
-  static const double _snakeCellSize = 10.0;
-
   List<double> _accelerometerValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions =
       <StreamSubscription<dynamic>>[];
@@ -91,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .add(accelerometerEvents.listen((AccelerometerEvent event) {
       setState(() {
         _accelerometerValues = <double>[event.x, event.y, event.z];
+        Lager.log("$_accelerometerValues");
       });
     }));
   }

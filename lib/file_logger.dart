@@ -16,7 +16,8 @@ class Lager {
   }
 
   static Future log(String s) async {
-    final text = '${new DateTime.now()}: $s\n';
+    var now = new DateTime.now();
+    final text = '${now.hour}:${now.minute}:${now.second}.${now.millisecond} $s\n';
     return _lock.synchronized(() async {
       await _logFile.writeAsString(text, mode: FileMode.append, flush: true);
     });
