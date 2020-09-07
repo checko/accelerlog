@@ -16,12 +16,12 @@ Future<String> _getDocsDir() async {
   return directory.path;
 }
 
-var _logFilename = "gvalue.txt";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   var docsDir = await _getDocsDir();
-  String canonFilename = '$docsDir/$_logFilename';
+  var now = DateTime.now();
+  String canonFilename = '$docsDir/${now.month}-${now.day} ${now.hour}:${now.minute}.txt';
 
   await Lager.initializeLogging(canonFilename);
 
