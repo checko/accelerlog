@@ -53,6 +53,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int second=0;
+  double sumx=0;
+  double sumy=0;
+  double sumz=0;
+  int sumi=0;
   List<double> _accelerometerValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions =
       <StreamSubscription<dynamic>>[];
@@ -104,14 +108,25 @@ class _MyHomePageState extends State<MyHomePage> {
     _streamSubscriptions
         .add(accelerometerEvents.listen((AccelerometerEvent event) {
       var now = new DateTime.now();
+      sumx += event.x;
+      sumy += event.y;
+      sumz += event.z;
+      sumi++;
       if(now.second != second) {
         second = now.second;
+        sumx=sumx/sumi;
+        sumy=sumy/sumi;
+        sumz=sumz/sumi;
         setState(() {
-          _accelerometerValues = <double>[event.x, event.y, event.z];
+          _accelerometerValues = <double>[sumx, sumy, sumz];
           String times = "${now.hour}:${now.minute}:${now.second}";
-          String gdata = "${event.x.toStringAsFixed(2)},${event.y.toStringAsFixed(2)},${event.z.toStringAsFixed(2)}";
+          String gdata = "${sumx.toStringAsFixed(2)},${sumy.toStringAsFixed(2)},${sumz.toStringAsFixed(2)}";
           Lager.lograw("$gdata\n");
         });
+        sumx = 0;
+        sumy = 0;
+        sumz = 0;
+        sumi = 0;
       }
     }));
   }
